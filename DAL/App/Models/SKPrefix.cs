@@ -4,6 +4,7 @@ namespace DynamoDB.DAL.App.Models
     {
         public const string USER = "USER|";
         public const string TITLE = "TITLE|";
-        public const string STREAMING_SERVICE = "SS|";
+        public const string SERVICE = "SERVICE|";
+        public const string SERVICE_TITLE = "SERVICE_TITLE|";
     }
 }

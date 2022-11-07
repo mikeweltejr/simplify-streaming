@@ -5,11 +5,13 @@ namespace DynamoDB.DAL.App.Models
     public class DynamoBase
     {
         [JsonIgnore]
-        public string PK { get; }
+        public string? PK { get; set; }
         [JsonIgnore]
-        public string SK { get; }
+        public string? SK { get; set; }
         [JsonIgnore]
-        public string? GSI_1 { get; }
+        public string? GSI_1 { get; set; }
+
+        public DynamoBase () {}
 
         public DynamoBase(string pk, string sk)
         {

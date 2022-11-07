@@ -1,18 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 namespace DynamoDB.DAL.App.Models
 {
     public class Title : DynamoBase
     {
-        public string TitleId { get; }
-        public string Name { get; }
-        public TitleType Type { get; }
-        public int ReleaseYear { get; }
-        public string Description { get; }
-        public List<Category> Categories { get; }
-        public string Rating { get; }
+        public string? Id { get; } = Guid.NewGuid().ToString();
+        public string? Name { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TitleType Type { get; set; }
+        public int ReleaseYear { get; set; }
+        public string? Description { get; set; }
+        public List<Category>? Categories { get; set; }
+        public string? Rating { get; set; }
 
-        public Title(string titleId, string name, TitleType type) : base(titleId, SKPrefix.TITLE + titleId)
+        public Title()
         {
-            this.TitleId = titleId;
+            Id = Guid.NewGuid().ToString();
+            PK = Id;
+            SK = SKPrefix.TITLE + Id;
+        }
+
+        public Title(string id, string name, TitleType type) : base(id, SKPrefix.TITLE + id)
+        {
+            this.Id = id;
             this.Name = name;
             this.Type = type;
             this.Description = "";
@@ -21,16 +32,16 @@ namespace DynamoDB.DAL.App.Models
         }
 
         public Title(
-            string titleId,
+            string id,
             string name,
             TitleType type,
             int releaseYear,
             string description,
             List<Category> categories,
             string rating
-        ) : base(titleId, SKPrefix.TITLE + titleId)
+        ) : base(id, SKPrefix.TITLE + id)
         {
-            this.TitleId = titleId;
+            this.Id = id;
             this.Name = name;
             this.Type = type;
             this.Description = description;
@@ -47,6 +58,7 @@ namespace DynamoDB.DAL.App.Models
 
     public enum Category
     {
+        [Display(Name = "Sci-Fi")]
         SciFi = 1,
         Horror = 2,
         Documentary = 3,

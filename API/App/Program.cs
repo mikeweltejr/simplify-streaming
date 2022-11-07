@@ -3,6 +3,7 @@ using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.Runtime;
+using DynamoDB.DAL.App.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,8 @@ builder.Services.AddSwaggerGen(c => {
 });
 builder.Services.AddHealthChecks();
 
-var region = builder.Configuration["DynamoDB:Region"];
-var serviceURL = builder.Configuration["DynamoDB:ServiceURL"];
+var region = builder.Configuration["DynamoDBConfig:Region"];
+var serviceURL = builder.Configuration["DynamoDBConfig:ServiceURL"];
 var config = new AmazonDynamoDBConfig();
 AmazonDynamoDBClient client;
 
@@ -46,14 +47,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UsePathBase(new PathString("/api"));
-
 app.MapHealthChecks("/health");
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
+
+if(!app.Environment.IsEnvironment("Testing"))
+{
+    var seedData = new SeedData(db);
+    await seedData.SeedAllTitles();
+    await seedData.SeedStreamingTitles();
+}
 
 await app.RunAsync();
 
