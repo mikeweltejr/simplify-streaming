@@ -66,7 +66,7 @@ namespace DynamoDB.DAL.Test.Repositories
 
                     var retTitle = await _titleRepository.Get(TITLE_ID);
 
-                    Assert.That(retTitle.Name, Is.EqualTo(title.Name));
+                    Assert.That(retTitle?.Name, Is.EqualTo(title.Name));
                 }
                 finally
                 {
