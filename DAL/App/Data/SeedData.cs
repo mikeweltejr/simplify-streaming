@@ -101,6 +101,9 @@ namespace DynamoDB.DAL.App.Data
 
             if (primeTitles != null) titles.AddRange(primeTitles);
 
+            jsonData = await File.ReadAllTextAsync("hard_copies.json");
+            List<ServiceTitle>? discTitles = JsonSerializer.Deserialize<List<ServiceTitle>>(jsonData);
+
             return titles;
         }
 
