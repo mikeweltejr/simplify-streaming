@@ -85,6 +85,35 @@ namespace DynamoDB.DAL.Test.Repositories
         }
 
         [Test]
+        public async Task WhenGetCalledWithServiceWithoutTitles_ReturnsEmptyList()
+        {
+            using(var db = Configuration.GetDBContext())
+            {
+                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
+                var serviceTitle2 = new ServiceTitle(Service.Disney, TITLE_ID_2, TITLE_NAME_2);
+                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return");
+
+                try
+                {
+                    await db.SaveAsync(serviceTitle1, Globals.DB_CONFIG);
+                    await db.SaveAsync(serviceTitle2, Globals.DB_CONFIG);
+                    await db.SaveAsync(serviceTitle3, Globals.DB_CONFIG);
+                    _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
+
+                    var serviceTitles = await _serviceTitleRepository.Get(Service.Apple);
+
+                    Assert.IsEmpty(serviceTitles);
+                }
+                finally
+                {
+                    await db.DeleteAsync(serviceTitle1, Globals.DB_CONFIG);
+                    await db.DeleteAsync(serviceTitle2, Globals.DB_CONFIG);
+                    await db.DeleteAsync(serviceTitle3, Globals.DB_CONFIG);
+                }
+            }
+        }
+
+        [Test]
         public async Task WhenGetStreamingServicesForTitleCalledWithTitleId_ReturnsCorrectListOfStreamingServices()
         {
             using(var db = Configuration.GetDBContext())
