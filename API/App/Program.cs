@@ -7,6 +7,7 @@ using DynamoDB.DAL.App.Data;
 using DynamoDB.DAL.App.Repositories.Interfaces;
 using DynamoDB.DAL.App.Models;
 using DynamoDB.DAL.App.Repositories;
+using SimplifyStreaming.API.App.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddTransient<ISaveEntityRepository<User>, SaveEntityRepository<User>>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddTransient<ISaveEntityRepository<Title>, SaveEntityRepository<Title>>();
 builder.Services.AddTransient<ITitleRepository, TitleRepository>();
