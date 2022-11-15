@@ -4,6 +4,9 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.Runtime;
 using DynamoDB.DAL.App.Data;
+using DynamoDB.DAL.App.Repositories.Interfaces;
+using DynamoDB.DAL.App.Models;
+using DynamoDB.DAL.App.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,20 @@ builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 });
 builder.Services.AddHealthChecks();
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddTransient<ISaveEntityRepository<User>, SaveEntityRepository<User>>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+builder.Services.AddTransient<ISaveEntityRepository<Title>, SaveEntityRepository<Title>>();
+builder.Services.AddTransient<ITitleRepository, TitleRepository>();
+
+builder.Services.AddTransient<ISaveEntityRepository<UserTitle>, SaveEntityRepository<UserTitle>>();
+builder.Services.AddTransient<IUserTitleRepository, UserTitleRepository>();
+
+builder.Services.AddTransient<ISaveEntityRepository<ServiceTitle>, SaveEntityRepository<ServiceTitle>>();
+builder.Services.AddTransient<IServiceTitleRepository, ServiceTitleRepository>();
 
 var region = builder.Configuration["DynamoDBConfig:Region"];
 var serviceURL = builder.Configuration["DynamoDBConfig:ServiceURL"];
