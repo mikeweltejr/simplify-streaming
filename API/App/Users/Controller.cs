@@ -11,44 +11,37 @@ namespace SimplifyStreaming.API.App.Users
     [Route("/controller")]
     public class UsersController : BaseController
     {
-        private readonly ISaveEntityRepository<User> _saveEntityRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IScopedService<User> _userScopedService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
         public UsersController(
-            ISaveEntityRepository<User> saveEntityRepository,
-            IUserRepository userRepository,
-            IScopedService<User> userScopedService,
+            IUserService userService,
             IMapper mapper)
         {
-            _saveEntityRepository = saveEntityRepository;
-            _userRepository = userRepository;
-            _userScopedService = userScopedService;
+            _userService = userService;
             _mapper = mapper;
         }
 
         [HttpGet("{id}", Name="UserLink")]
         [UserNotFound("id")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            return Ok(_userScopedService.Get());
+            var user = await _userService.GetUser(id);
+            return Ok(user);
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationCheckFilter))]
         public async Task<IActionResult> Post([FromBody] UserCreateDto userCreateDto)
         {
-            if (userCreateDto.Id == null || userCreateDto.Email == null)
-                return BadRequest("id and email cannot be blank");
-
-            var existingUser = await _userRepository.Get(userCreateDto.Id);
+            var existingUser = await _userService.GetUser(userCreateDto.Id!);
 
             if (existingUser != null)
                 return Conflict("User with this id already exists");
 
             var user = _mapper.Map<User>(userCreateDto);
 
-            user = await _saveEntityRepository.Save(user);
+            user = await _userService.Save(user);
 
             return CreatedAtRoute(
                 routeName: "UserLink",
@@ -61,11 +54,7 @@ namespace SimplifyStreaming.API.App.Users
         [UserNotFound("id")]
         public async Task<IActionResult> Delete(string id)
         {
-            var user = _userScopedService.Get();
-
-            if (user == null) return NotFound("User not found");
-
-            await _saveEntityRepository.Delete(user);
+            await _userService.Delete(id);
 
             return NoContent();
         }

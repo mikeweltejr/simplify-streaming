@@ -8,6 +8,8 @@ using DynamoDB.DAL.App.Repositories.Interfaces;
 using DynamoDB.DAL.App.Models;
 using DynamoDB.DAL.App.Repositories;
 using SimplifyStreaming.API.App.Users;
+using SimplifyStreaming.API.App.Common.Filters;
+using SimplifyStreaming.API.App.Common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddTransient<ISaveEntityRepository<User>, SaveEntityRepository<User>>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IScopedService<User>, ScopedService<User>>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddTransient<ISaveEntityRepository<Title>, SaveEntityRepository<Title>>();
@@ -35,6 +38,8 @@ builder.Services.AddTransient<IUserTitleRepository, UserTitleRepository>();
 
 builder.Services.AddTransient<ISaveEntityRepository<ServiceTitle>, SaveEntityRepository<ServiceTitle>>();
 builder.Services.AddTransient<IServiceTitleRepository, ServiceTitleRepository>();
+
+builder.Services.AddScoped<ValidationCheckFilter>();
 
 var region = builder.Configuration["DynamoDBConfig:Region"];
 var serviceURL = builder.Configuration["DynamoDBConfig:ServiceURL"];
