@@ -10,6 +10,7 @@ using DynamoDB.DAL.App.Repositories;
 using SimplifyStreaming.API.App.Users;
 using SimplifyStreaming.API.App.Common.Filters;
 using SimplifyStreaming.API.App.Common.Services;
+using SimplifyStreaming.API.App.Titles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +28,15 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddTransient<ISaveEntityRepository<User>, SaveEntityRepository<User>>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IScopedService<User>, ScopedService<User>>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<IScopedService<User>, ScopedService<User>>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddTransient<ISaveEntityRepository<Title>, SaveEntityRepository<Title>>();
 builder.Services.AddTransient<ITitleRepository, TitleRepository>();
+builder.Services.AddTransient<ITitleService, TitleService>();
+builder.Services.AddScoped<IScopedService<Title>, ScopedService<Title>>();
+builder.Services.AddAutoMapper(typeof(TitleProfile));
 
 builder.Services.AddTransient<ISaveEntityRepository<UserTitle>, SaveEntityRepository<UserTitle>>();
 builder.Services.AddTransient<IUserTitleRepository, UserTitleRepository>();

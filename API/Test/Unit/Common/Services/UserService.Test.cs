@@ -7,7 +7,6 @@ namespace SimplifyStreaming.API.Test.Common.Services
 {
     public class UserServiceTest
     {
-        private Mock<ISaveEntityRepository<User>> _mockSaveRepository = new Mock<ISaveEntityRepository<User>>();
         private Mock<IUserRepository> _mockUserRepository = new Mock<IUserRepository>();
         private Mock<IScopedService<User>> _mockScopeService = new Mock<IScopedService<User>>();
         private IUserService? _userService;
@@ -17,10 +16,9 @@ namespace SimplifyStreaming.API.Test.Common.Services
         [SetUp]
         public void SetUp()
         {
-            _mockSaveRepository = new Mock<ISaveEntityRepository<User>>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockScopeService = new Mock<IScopedService<User>>();
-            _userService = new UserService(_mockUserRepository.Object, _mockScopeService.Object, _mockSaveRepository.Object);
+            _userService = new UserService(_mockUserRepository.Object, _mockScopeService.Object);
         }
 
         [TearDown]
@@ -69,12 +67,12 @@ namespace SimplifyStreaming.API.Test.Common.Services
         public async Task WhenSaveCalled_WithUser_CallsUserRepositorySave()
         {
             var user = new User(USER_ID, EMAIL);
-            _mockSaveRepository.Setup(s => s.Save(user)).ReturnsAsync(user);
+            _mockUserRepository.Setup(s => s.Save(user)).ReturnsAsync(user);
 
             var retUser = await _userService!.Save(user);
 
             Assert.That(retUser, Is.EqualTo(user));
-            _mockSaveRepository.Verify(s => s.Save(user), Times.Once);
+            _mockUserRepository.Verify(s => s.Save(user), Times.Once);
 
         }
 
@@ -87,7 +85,7 @@ namespace SimplifyStreaming.API.Test.Common.Services
             var isDeleted = await _userService!.Delete("badId");
 
             Assert.IsFalse(isDeleted);
-            _mockSaveRepository.Verify(s => s.Delete(It.IsAny<User>()), Times.Never);
+            _mockUserRepository.Verify(s => s.Delete(It.IsAny<User>()), Times.Never);
         }
 
         [Test]
@@ -99,7 +97,7 @@ namespace SimplifyStreaming.API.Test.Common.Services
             var isDeleted = await _userService!.Delete(USER_ID);
 
             Assert.IsTrue(isDeleted);
-            _mockSaveRepository.Verify(s => s.Delete(user), Times.Once);
+            _mockUserRepository.Verify(s => s.Delete(user), Times.Once);
         }
     }
 }

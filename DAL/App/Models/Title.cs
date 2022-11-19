@@ -9,7 +9,7 @@ namespace DynamoDB.DAL.App.Models
         public string? Name { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TitleType Type { get; set; }
-        public int ReleaseYear { get; set; }
+        public string? ReleaseYear { get; set; }
         public string? Description { get; set; }
         public List<Category>? Categories { get; set; }
         public string? Rating { get; set; }
@@ -35,7 +35,7 @@ namespace DynamoDB.DAL.App.Models
             string id,
             string name,
             TitleType type,
-            int releaseYear,
+            string releaseYear,
             string description,
             List<Category> categories,
             string rating
