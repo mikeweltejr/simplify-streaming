@@ -15,16 +15,16 @@ namespace SimplifyStreaming.API.App.Common.Filters
 
         public class UserNotFoundImplementation : IAsyncActionFilter
         {
-            private readonly IUserRepository _userRepository;
+            private readonly IUserService _userService;
             private readonly IScopedService<User> _scopedService;
             private readonly string _idName;
 
             public UserNotFoundImplementation(
-                IUserRepository userRepository,
+                IUserService userService,
                 IScopedService<User> scopedService,
                 string idName)
             {
-                _userRepository = userRepository;
+                _userService = userService;
                 _scopedService = scopedService;
                 _idName = idName;
             }
@@ -39,7 +39,7 @@ namespace SimplifyStreaming.API.App.Common.Filters
                     return;
                 }
 
-                var user = await _userRepository.Get(id);
+                var user = await _userService.GetUser(id);
 
                 if(user == null)
                 {
