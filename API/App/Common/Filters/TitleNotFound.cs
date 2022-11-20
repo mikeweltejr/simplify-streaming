@@ -15,16 +15,16 @@ namespace SimplifyStreaming.API.App.Common.Filters
 
         public class TitleNotFoundImplementation : IAsyncActionFilter
         {
-            private readonly ITitleRepository _titleRepository;
+            private readonly ITitleService _titleService;
             private readonly IScopedService<Title> _scopedService;
             private readonly string _idName;
 
             public TitleNotFoundImplementation(
-                ITitleRepository titleRepository,
+                ITitleService titleService,
                 IScopedService<Title> scopedService,
                 string idName)
             {
-                _titleRepository = titleRepository;
+                _titleService = titleService;
                 _scopedService = scopedService;
                 _idName = idName;
             }
@@ -39,7 +39,7 @@ namespace SimplifyStreaming.API.App.Common.Filters
                     return;
                 }
 
-                var title = await _titleRepository.Get(id);
+                var title = await _titleService.GetTitle(id);
 
                 if(title == null)
                 {
