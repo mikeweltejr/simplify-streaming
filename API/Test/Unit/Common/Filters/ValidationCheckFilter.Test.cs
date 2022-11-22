@@ -8,7 +8,7 @@ using Routing = Microsoft.AspNetCore.Routing;
 using Moq;
 using SimplifyStreaming.API.App.Common.Filters;
 
-namespace SimplifyStreaming.API.Test.Common.Filters
+namespace SimplifyStreaming.API.Test.Unit.Common.Filters
 {
     public class ValidationCheckFilterTest
     {

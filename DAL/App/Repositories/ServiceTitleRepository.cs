@@ -19,7 +19,7 @@ namespace DynamoDB.DAL.App.Repositories
             await _saveEntityRepository.Delete(serviceTitle);
         }
 
-        public async Task<List<ServiceTitle>> Get(Service id)
+        public async Task<List<ServiceTitle>> GetAll(Service id)
         {
             var serviceTitles = await GetDynamoQueryResults<ServiceTitle>(
                 "PK",
@@ -27,6 +27,12 @@ namespace DynamoDB.DAL.App.Repositories
                 SKPrefix.SERVICE_TITLE
             );
             return serviceTitles;
+        }
+
+        public async Task<ServiceTitle?> Get(Service id, string titleId)
+        {
+            var serviceTitles = await GetDynamoQueryResults<ServiceTitle>("PK", SKPrefix.SERVICE + id.ToString(), SKPrefix.SERVICE_TITLE + titleId);
+            return serviceTitles.FirstOrDefault();
         }
 
         public async Task<List<ServiceTitle>> GetStreamingServicesForTitle(string titleId)

@@ -11,7 +11,7 @@ using SimplifyStreaming.API.App.Common.Services;
 using Microsoft.AspNetCore.Routing;
 using static SimplifyStreaming.API.App.Common.Filters.TitleNotFound;
 
-namespace SimplifyStreaming.API.Test.Common.Filters
+namespace SimplifyStreaming.API.Test.Unit.Common.Filters
 {
     public class TitleNotFoundFilterTest
     {

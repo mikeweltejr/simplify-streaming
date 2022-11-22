@@ -5,7 +5,7 @@ using Moq;
 using SimplifyStreaming.API.App.Common.Services;
 using SimplifyStreaming.API.App.Users;
 
-namespace SimplifyStreaming.API.Test.Users
+namespace SimplifyStreaming.API.Test.Unit.Users
 {
     public class UsersControllerTest
     {

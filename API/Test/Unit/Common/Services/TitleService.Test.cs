@@ -3,7 +3,7 @@ using DynamoDB.DAL.App.Repositories.Interfaces;
 using Moq;
 using SimplifyStreaming.API.App.Common.Services;
 
-namespace SimplifyStreaming.API.Test.Common.Services
+namespace SimplifyStreaming.API.Test.Unit.Common.Services
 {
     public class TitleServiceTest
     {

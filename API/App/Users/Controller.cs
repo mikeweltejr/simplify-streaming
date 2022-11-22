@@ -8,7 +8,7 @@ using SimplifyStreaming.API.App.Common.Services;
 
 namespace SimplifyStreaming.API.App.Users
 {
-    [Route("/controller")]
+    [Route("/[controller]")]
     public class UsersController : BaseController
     {
         private readonly IUserService _userService;

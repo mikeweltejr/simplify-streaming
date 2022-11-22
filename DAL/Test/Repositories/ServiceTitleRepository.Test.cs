@@ -71,7 +71,7 @@ namespace DynamoDB.DAL.Test.Repositories
                     await db.SaveAsync(serviceTitle3, Globals.DB_CONFIG);
                     _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
 
-                    var serviceTitles = await _serviceTitleRepository.Get(Service.Disney);
+                    var serviceTitles = await _serviceTitleRepository.GetAll(Service.Disney);
 
                     Assert.That(serviceTitles.Count, Is.EqualTo(2));
                 }
@@ -100,7 +100,7 @@ namespace DynamoDB.DAL.Test.Repositories
                     await db.SaveAsync(serviceTitle3, Globals.DB_CONFIG);
                     _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
 
-                    var serviceTitles = await _serviceTitleRepository.Get(Service.Apple);
+                    var serviceTitles = await _serviceTitleRepository.GetAll(Service.Apple);
 
                     Assert.IsEmpty(serviceTitles);
                 }
@@ -140,6 +140,58 @@ namespace DynamoDB.DAL.Test.Repositories
                     await db.DeleteAsync(serviceTitle3, Globals.DB_CONFIG);
                 }
             }
+        }
+
+        [Test]
+        public async Task WhenGetCalled_WithValidServiceIdAndTitleId_ReturnsCorrectServiceTitle()
+        {
+            using(var db = Configuration.GetDBContext())
+            {
+                var serviceTitle = new ServiceTitle(Service.Disc, TITLE_ID, TITLE_NAME);
+
+                try
+                {
+                    await db.SaveAsync(serviceTitle, Globals.DB_CONFIG);
+
+                    _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
+
+                    var retServiceTitle = await _serviceTitleRepository.Get(Service.Disc, TITLE_ID);
+
+                    Assert.That(retServiceTitle?.ServiceId, Is.EqualTo(serviceTitle.ServiceId));
+                    Assert.That(retServiceTitle?.TitleId, Is.EqualTo(serviceTitle.TitleId));
+                    Assert.That(retServiceTitle?.TitleName, Is.EqualTo(serviceTitle.TitleName));
+                }
+                finally
+                {
+                    await db.DeleteAsync(serviceTitle, Globals.DB_CONFIG);
+                }
+            }
+        }
+
+        [Test]
+        public async Task WhenGetCalled_WithInvalidServiceIdAndTitleId_ReturnsNull()
+        {
+            using(var db = Configuration.GetDBContext())
+            {
+                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
+
+                try
+                {
+                    await db.SaveAsync(serviceTitle, Globals.DB_CONFIG);
+                    _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
+
+                    var retServiceTitle = await _serviceTitleRepository.Get(Service.Disney, "badTitleId");
+
+                    Assert.Null(retServiceTitle);
+                }
+                finally
+                {
+                    await db.DeleteAsync(serviceTitle, Globals.DB_CONFIG);
+                }
+
+            }
+
+
         }
     }
 }
