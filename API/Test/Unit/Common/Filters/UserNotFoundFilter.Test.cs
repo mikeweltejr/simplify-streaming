@@ -11,7 +11,7 @@ using SimplifyStreaming.API.App.Common.Services;
 using static SimplifyStreaming.API.App.Common.Filters.UserNotFound;
 using Microsoft.AspNetCore.Routing;
 
-namespace SimplifyStreaming.API.Test.Common.Filters
+namespace SimplifyStreaming.API.Test.Unit.Common.Filters
 {
     public class UserNotFoundFilterTest
     {

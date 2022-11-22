@@ -25,15 +25,17 @@ namespace DynamoDB.DAL.App.Models
         }
         [JsonPropertyName("Name")]
         public string? TitleName { get; set; }
+        public TitleType Type { get; set; }
 
         public ServiceTitle() {}
 
-        public ServiceTitle(Service serviceId, string titleId, string titleName)
+        public ServiceTitle(Service serviceId, string titleId, string titleName, TitleType type)
             : base(SKPrefix.SERVICE + serviceId, SKPrefix.SERVICE_TITLE + titleId, titleId)
         {
             this.ServiceId = serviceId;
             this.TitleId = titleId;
             this.TitleName = titleName;
+            this.Type = type;
         }
     }
 }

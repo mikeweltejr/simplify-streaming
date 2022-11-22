@@ -5,7 +5,7 @@ using Moq;
 using SimplifyStreaming.API.App.Common.Services;
 using SimplifyStreaming.API.App.Titles;
 
-namespace SimplifyStreaming.API.Test.Titles
+namespace SimplifyStreaming.API.Test.Unit.Titles
 {
     public class TitlesControllerTest
     {

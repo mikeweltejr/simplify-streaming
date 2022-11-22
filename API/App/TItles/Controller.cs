@@ -7,7 +7,7 @@ using SimplifyStreaming.API.App.Common.Services;
 
 namespace SimplifyStreaming.API.App.Titles
 {
-    [Route("/controller")]
+    [Route("/[controller]")]
     public class TitlesController : BaseController
     {
         private readonly ITitleService _titleService;
