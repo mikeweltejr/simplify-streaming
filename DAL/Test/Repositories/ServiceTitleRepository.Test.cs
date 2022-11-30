@@ -30,7 +30,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
+                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
                 _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
                 _mockSaveRepository.Setup(s => s.Save(serviceTitle)).ReturnsAsync(serviceTitle);
 
@@ -46,7 +46,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
+                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
                 _serviceTitleRepository = new ServiceTitleRepository(_mockSaveRepository.Object, db);
 
                 await _serviceTitleRepository.Delete(serviceTitle);
@@ -60,9 +60,9 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
-                var serviceTitle2 = new ServiceTitle(Service.Disney, TITLE_ID_2, TITLE_NAME_2);
-                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return");
+                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
+                var serviceTitle2 = new ServiceTitle(Service.Disney, TITLE_ID_2, TITLE_NAME_2, TitleType.Movie);
+                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return", TitleType.Movie);
 
                 try
                 {
@@ -89,9 +89,9 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
-                var serviceTitle2 = new ServiceTitle(Service.Disney, TITLE_ID_2, TITLE_NAME_2);
-                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return");
+                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
+                var serviceTitle2 = new ServiceTitle(Service.Disney, TITLE_ID_2, TITLE_NAME_2, TitleType.Movie);
+                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return", TitleType.Movie);
 
                 try
                 {
@@ -118,9 +118,9 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
-                var serviceTitle2 = new ServiceTitle(Service.Netflix, TITLE_ID, TITLE_NAME);
-                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return");
+                var serviceTitle1 = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
+                var serviceTitle2 = new ServiceTitle(Service.Netflix, TITLE_ID, TITLE_NAME, TitleType.Movie);
+                var serviceTitle3 = new ServiceTitle(Service.Netflix, "BadId", "Do Not Return", TitleType.Movie);
 
                 try
                 {
@@ -147,7 +147,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle = new ServiceTitle(Service.Disc, TITLE_ID, TITLE_NAME);
+                var serviceTitle = new ServiceTitle(Service.Disc, TITLE_ID, TITLE_NAME, TitleType.Movie);
 
                 try
                 {
@@ -173,7 +173,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME);
+                var serviceTitle = new ServiceTitle(Service.Disney, TITLE_ID, TITLE_NAME, TitleType.Movie);
 
                 try
                 {

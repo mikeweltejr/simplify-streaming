@@ -27,4 +27,14 @@
     <ProjectReference Include="..\App\App.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Test'))">
+    <CollectCoverage>true</CollectCoverage>
+    <ExcludeByAttribute>GeneratedCodeAttribute</ExcludeByAttribute>
+    <Exclude>[*]*.Migrations.*</Exclude>
+    <ExcludeByFile>**/Usings.cs</ExcludeByFile>
+    <CoverletOutputFormat>cobertura,json</CoverletOutputFormat>
+    <CoverletOutput>./test_results/</CoverletOutput>
+    <MergeWith>'../../API/Test/Unit/test_results/coverage.json'</MergeWith>
+  </PropertyGroup>
+
 </Project>

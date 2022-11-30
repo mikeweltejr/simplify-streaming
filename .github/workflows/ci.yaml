@@ -12,6 +12,11 @@ jobs:
     strategy:
       matrix:
         dotnet-version: ['7.0.x']
+    services:
+      dynamodb-unit-test:
+        image: amazon/dynamodb-local
+        ports:
+          - 8001:8000
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
@@ -24,3 +29,12 @@ jobs:
       - name: Build
         working-directory: ./API/App
         run: dotnet build --configuration Release --no-restore
+      - name: API Unit Tests
+        working-directory: ./API/Test/Unit
+        run: dotnet test
+      - name: Setup DynamoDB
+        working-directory: ./DAL/Local
+        run: dotnet run 8001
+      - name: DynamoDB DAL Unit Tests
+        working-directory: ./DAL/Test
+        run:  dotnet test

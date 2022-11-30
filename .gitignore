@@ -33,6 +33,8 @@ artifacts/
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
+*coverage.*
+test_results
 
 # Click-Once directory
 publish/
