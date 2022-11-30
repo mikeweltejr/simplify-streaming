@@ -27,4 +27,11 @@
     <ProjectReference Include="..\..\..\DAL\App\App.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Unit'))">
+    <CollectCoverage>true</CollectCoverage>
+    <ExcludeByAttribute>GeneratedCodeAttribute</ExcludeByAttribute>
+    <Exclude>[*]*.Migrations.*</Exclude>
+    <ExcludeByFile>**/Program.cs</ExcludeByFile>
+    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
+  </PropertyGroup>
 </Project>
