@@ -32,6 +32,7 @@
     <ExcludeByAttribute>GeneratedCodeAttribute</ExcludeByAttribute>
     <Exclude>[*]*.Migrations.*</Exclude>
     <ExcludeByFile>**/Program.cs</ExcludeByFile>
-    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
+    <CoverletOutputFormat>cobertura,json</CoverletOutputFormat>
+    <CoverletOutput>./test_results/</CoverletOutput>
   </PropertyGroup>
 </Project>

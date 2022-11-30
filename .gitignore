@@ -34,7 +34,7 @@ artifacts/
 *.coverage
 *.coveragexml
 *coverage.*
-TestResults
+test_results
 
 # Click-Once directory
 publish/
