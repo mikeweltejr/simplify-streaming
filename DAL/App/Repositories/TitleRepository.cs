@@ -23,7 +23,7 @@ namespace DynamoDB.DAL.App.Repositories
         public async Task<Title?> Get(string id)
         {
             var titles = await GetDynamoQueryResults<Title>("PK", id, SKPrefix.TITLE + id);
-            return titles?.FirstOrDefault();
+            return titles.FirstOrDefault();
         }
 
         public async Task<Title> Save(Title title)

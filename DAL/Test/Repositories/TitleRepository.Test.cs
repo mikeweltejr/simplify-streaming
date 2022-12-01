@@ -74,5 +74,18 @@ namespace DynamoDB.DAL.Test.Repositories
                 }
             }
         }
+
+        [Test]
+        public async Task WhenGetCalledWithInvalidId_ReturnsNull()
+        {
+            using(var db = Configuration.GetDBContext())
+            {
+                _titleRepository = new TitleRepository(_mockSaveRepository.Object, db);
+
+                var retTitle = await _titleRepository.Get("theId");
+
+                Assert.Null(retTitle);
+            }
+        }
     }
 }
