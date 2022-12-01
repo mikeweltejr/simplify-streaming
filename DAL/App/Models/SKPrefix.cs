@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace DynamoDB.DAL.App.Models
 {
+    [ExcludeFromCodeCoverage]
     public static class SKPrefix
     {
         public const string USER = "USER|";

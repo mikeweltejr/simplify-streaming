@@ -1,11 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace DynamoDB.DAL.App.Models
 {
     public class Title : DynamoBase
     {
-        public string? Id { get; } = Guid.NewGuid().ToString();
+        private string? _id;
+        public string? Id {
+            get { return _id; }
+            set {
+                _id = value;
+                PK = value;
+                SK = SKPrefix.TITLE + value;
+            }
+        }
         public string? Name { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TitleType Type { get; set; }
@@ -14,21 +23,13 @@ namespace DynamoDB.DAL.App.Models
         public List<Category>? Categories { get; set; }
         public string? Rating { get; set; }
 
-        public Title()
-        {
-            Id = Guid.NewGuid().ToString();
-            PK = Id;
-            SK = SKPrefix.TITLE + Id;
-        }
+        public Title() {}
 
         public Title(string id, string name, TitleType type) : base(id, SKPrefix.TITLE + id)
         {
             this.Id = id;
             this.Name = name;
             this.Type = type;
-            this.Description = "";
-            this.Categories = new List<Category>();
-            this.Rating = "";
         }
 
         public Title(
@@ -47,6 +48,7 @@ namespace DynamoDB.DAL.App.Models
             this.Description = description;
             this.Categories = categories;
             this.Rating = rating;
+            this.ReleaseYear = releaseYear;
         }
     }
 
