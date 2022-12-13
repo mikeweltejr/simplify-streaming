@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace DynamoDB.DAL.App.Models
 {
     public class GeneralBool : DynamoBase

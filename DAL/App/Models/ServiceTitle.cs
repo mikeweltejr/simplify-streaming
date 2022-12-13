@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using ThirdParty.Json.LitJson;
 
@@ -25,7 +26,8 @@ namespace DynamoDB.DAL.App.Models
         }
         [JsonPropertyName("Name")]
         public string? TitleName { get; set; }
-        public TitleType Type { get; set; }
+        [JsonPropertyName("Type")]
+        public TitleType TitleType { get; set; }
 
         public ServiceTitle() {}
 
@@ -35,7 +37,7 @@ namespace DynamoDB.DAL.App.Models
             this.ServiceId = serviceId;
             this.TitleId = titleId;
             this.TitleName = titleName;
-            this.Type = type;
+            this.TitleType = type;
         }
     }
 }
