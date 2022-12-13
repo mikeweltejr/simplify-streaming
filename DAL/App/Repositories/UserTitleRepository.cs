@@ -26,6 +26,12 @@ namespace DynamoDB.DAL.App.Repositories
             return userTitles;
         }
 
+        public async Task<UserTitle?> Get(string userId, string titleId)
+        {
+            var userTitle = await GetDynamoQueryResults<UserTitle>("PK", userId, SKPrefix.USER_TITLE + titleId);
+            return userTitle.FirstOrDefault();
+        }
+
         public async Task<UserTitle> Save(UserTitle userTitle)
         {
             return await _saveEntityRepository.Save(userTitle);

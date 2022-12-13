@@ -1,4 +1,3 @@
-using AutoMapper;
 using DynamoDB.DAL.App.Models;
 using Microsoft.AspNetCore.Mvc;
 using SimplifyStreaming.API.App.Common.Controllers;

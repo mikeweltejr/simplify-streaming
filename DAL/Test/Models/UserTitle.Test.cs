@@ -22,7 +22,7 @@ namespace DynamoDB.DAL.Test.Models
         [Test]
         public void WhenConstructorCalled_WithAllProperties_SetsAllPropertiesExceptGSI1()
         {
-            var userTitle = new UserTitle(USER_ID, TITLE_ID, TITLE_NAME, TitleType.Movie);
+            var userTitle = new UserTitle(USER_ID, TITLE_ID, TITLE_NAME, TitleType.Movie, "2001", new List<Category> { Category.Action });
 
             Assert.That(userTitle.UserId, Is.EqualTo(USER_ID));
             Assert.That(userTitle.TitleId, Is.EqualTo(TITLE_ID));

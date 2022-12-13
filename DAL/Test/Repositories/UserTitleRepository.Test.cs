@@ -28,7 +28,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var userTitle = new UserTitle(USER_ID, TITLE_ID, "A movie", TitleType.Movie);
+                var userTitle = new UserTitle(USER_ID, TITLE_ID, "A movie", TitleType.Movie, "2001", new List<Category> {Category.Action});
                 _userTitleRepository = new UserTitleRepository(_mockSaveRepository.Object, db);
                 _mockSaveRepository.Setup(s => s.Save(userTitle)).ReturnsAsync(userTitle);
 
@@ -44,7 +44,7 @@ namespace DynamoDB.DAL.Test.Repositories
         {
             using(var db = Configuration.GetDBContext())
             {
-                var userTitle = new UserTitle(USER_ID, TITLE_ID, "A movie", TitleType.Movie);
+                var userTitle = new UserTitle(USER_ID, TITLE_ID, "A movie", TitleType.Movie, "2000", new List<Category> { Category.Documentary });
                 _userTitleRepository = new UserTitleRepository(_mockSaveRepository.Object, db);
 
                 await _userTitleRepository.Delete(userTitle);
@@ -56,9 +56,9 @@ namespace DynamoDB.DAL.Test.Repositories
         [Test]
         public async Task WhenGetCalledWithValidUserId_ReturnsCorrectTitlesForUser()
         {
-            var userTitle1 = new UserTitle(USER_ID, TITLE_ID, "Movie 1", TitleType.Movie);
-            var userTitle2 = new UserTitle(USER_ID, "titleId2", "Movie 2", TitleType.Movie);
-            var userTitle3 = new UserTitle("BAD_USER_ID", "titleId3", "Movie 3", TitleType.Movie);
+            var userTitle1 = new UserTitle(USER_ID, TITLE_ID, "Movie 1", TitleType.Movie, "2000", new List<Category> { Category.Drama });
+            var userTitle2 = new UserTitle(USER_ID, "titleId2", "Movie 2", TitleType.Movie, "2012", new List<Category> { Category.Horror });
+            var userTitle3 = new UserTitle("BAD_USER_ID", "titleId3", "Movie 3", TitleType.Movie, "2003", new List<Category> { Category.SciFi });
 
             using(var db = Configuration.GetDBContext())
             {
@@ -85,8 +85,8 @@ namespace DynamoDB.DAL.Test.Repositories
         [Test]
         public async Task WhenGetCalledWithUserIdWhoHasNoTitles_ReturnsEmptyList()
         {
-            var userTitle1 = new UserTitle(USER_ID, TITLE_ID, "Movie 1", TitleType.Movie);
-            var userTitle2 = new UserTitle(USER_ID, "titleId2", "Movie 2", TitleType.Movie);
+            var userTitle1 = new UserTitle(USER_ID, TITLE_ID, "Movie 1", TitleType.Movie, "2001", new List<Category> { Category.SciFi });
+            var userTitle2 = new UserTitle(USER_ID, "titleId2", "Movie 2", TitleType.Movie, "2009", new List<Category> { Category.Comedy });
 
             using(var db = Configuration.GetDBContext())
             {
